@@ -36,10 +36,11 @@ def calculate():
     if not your_name or not crush_name:
         return "Both names are required!", 400
 
-    # Check if the entry already exists
+    # Check if the entry already exists (case-insensitive)
     conn = sqlite3.connect('compatibility.db')
     c = conn.cursor()
-    c.execute("SELECT score FROM entries WHERE your_name = ? AND crush_name = ?", (your_name, crush_name))
+    c.execute("SELECT score FROM entries WHERE LOWER(your_name) = LOWER(?) AND LOWER(crush_name) = LOWER(?)", 
+              (your_name, crush_name))
     result = c.fetchone()
 
     if result:
