@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculate compatibility between two names">
+  <meta name="theme-color" content="#ffffff">
+  <title>Crush Compatibility Calculator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <main class="container">
+      <article class="card">
+        <header>
+          <h1>Crush Compatibility Calculator</h1>
+        </header>
+        
+        <form action="/calculate" method="POST" autocomplete="on">
+          <div class="form-group">
+            <label for="yourName">Your Name:</label>
+            <input type="text" 
+                 name="yourName" 
+                 id="yourName" 
+                 placeholder="Enter your name" 
+                 required
+                 autocapitalize="words"
+                 minlength="2"
+                 maxlength="50">
+          </div>
+          
+          <div class="form-group">
+            <label for="crushName">Crush's Name:</label>
+            <input type="text" 
+                 name="crushName" 
+                 id="crushName" 
+                 placeholder="Enter your crush's name" 
+                 required
+                 autocapitalize="words"
+                 minlength="2"
+                 maxlength="50">
+          </div>
+          
+          <div class="form-actions">
+            <button type="submit" class="submit-btn">Calculate Compatibility</button>
+          </div>
+        </form>
+      </article>
+    </main>
+</body>
+</html></footer>

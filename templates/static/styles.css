@@ -1,0 +1,231 @@
+/* Modern CSS Reset */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Modern font import - preconnect for performance */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+:root {
+    --primary-color: #ff6b6b; /* Cupid theme color */
+    --primary-dark: #e63946;
+    --text-color: #444;
+    --background-color: #fff;
+    --container-background: linear-gradient(135deg, #ffe6e6, #ffffff); /* Cupid theme gradient */
+    --card-background: linear-gradient(135deg, #ff6b6b, #e63946); /* Cupid theme gradient */
+    --shadow-sm: 0 10px 20px rgb(0 0 0 / 0.2);
+    --shadow-lg: 0 15px 30px rgb(0 0 0 / 0.3);
+    --transition: 0.3s ease;
+}
+
+body {
+    font-family: 'Roboto', system-ui, sans-serif;
+    background: var(--container-background); /* Cupid theme background */
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin-inline: auto;
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--background-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card {
+    background: var(--card-background);
+    padding: clamp(1.5rem, 5vw, 2rem);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition), box-shadow var(--transition);
+    color: #fff; /* Ensure text is readable on gradient background */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+h1 {
+    color: #fff; /* Ensure text is readable on gradient background */
+    margin-block-end: 1.25rem;
+}
+
+form {
+    margin-block-start: 2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    margin-block: clamp(1rem, 3vw, 1.5rem);
+    position: relative;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #fff; /* Ensure text is readable on gradient background */
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+    transform-origin: left;
+    transition: transform var(--transition);
+}
+
+input,
+button {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font: inherit;
+    transition: all var(--transition);
+}
+
+input:focus {
+    border-color: var(--primary-color);
+    outline: 3px solid rgb(255 107 107 / 0.2); /* Cupid theme color */
+}
+
+button {
+    background-color: var(--primary-color);
+    color: #fff;
+    cursor: pointer;
+    border: none;
+}
+
+button:hover {
+    background-color: var(--primary-dark);
+    transform: scale(1.05);
+}
+
+footer {
+    margin-block-start: 1.25rem;
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}
+
+.submit-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color var(--transition), transform var(--transition);
+}
+
+.submit-btn:hover {
+    background-color: var(--primary-dark);
+    transform: scale(1.05);
+}
+
+.result-content {
+    margin-block: 2rem;
+}
+
+.names {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.compatibility-score {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-block: 1rem;
+}
+
+.result-message {
+    font-size: 1rem;
+    margin-block: 1rem;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-block: 2rem;
+}
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        padding: 1.5rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .form-group label {
+        font-size: 1rem;
+    }
+
+    .names {
+        font-size: 1rem;
+    }
+
+    .compatibility-score {
+        font-size: 1.5rem;
+    }
+
+    .result-message {
+        font-size: 0.875rem;
+    }
+
+    table {
+        font-size: 0.875rem;
+    }
+
+    th, td {
+        padding: 0.5rem;
+    }
+}

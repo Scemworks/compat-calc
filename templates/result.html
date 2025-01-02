@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate compatibility between two names">
+    <meta name="theme-color" content="#ffffff">
+    <title>Compatibility Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="wrapper">
+        <main class="container">
+            <article class="card">
+                <header>
+                    <h1>Your Compatibility Result</h1>
+                </header>
+                
+                <div class="result-content">
+                    <p class="names">{{ yourName }} & {{ crushName }}</p>
+                    <div class="compatibility-score">
+                        <h2>{{ compatibility }}%</h2>
+                        <p>Compatible!</p>
+                    </div>
+                    <p class="result-message">{{ message }}</p>
+                </div>
+
+                <div class="form-actions">
+                    <button onclick="window.location.href='/'" class="submit-btn">Calculate Again</button>
+                </div>
+            </article>
+        </main>
+
+    </div>
+</body>
+</html>
