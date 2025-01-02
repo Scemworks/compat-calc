@@ -7,6 +7,7 @@
   <meta name="theme-color" content="#ffffff">
   <title>Results</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <div class="wrapper">
@@ -24,6 +25,7 @@
                 <th>Your Name</th>
                 <th>Crush's Name</th>
                 <th>Compatibility Score</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -33,6 +35,11 @@
                 <td>{{ entry[1] }}</td>
                 <td>{{ entry[2] }}</td>
                 <td>{{ entry[3] }}%</td>
+                <td>
+                  <a href="{{ url_for('edit_entry', id=entry[0]) }}" class="edit-btn">
+                    <i class="fas fa-pencil-alt"></i>
+                  </a>
+                </td>
               </tr>
               {% endfor %}
             </tbody>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Edit Entry for Compatibility Calculator">
+    <meta name="theme-color" content="#ffffff">
+    <title>Edit Entry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="wrapper">
+        <main class="container">
+            <article class="card">
+                <header>
+                    <h1>Edit Entry</h1>
+                </header>
+
+                <form method="POST" action="/dashboard/edit">
+                    <input type="hidden" name="id" value="{{ entry[0] }}">
+                    <label for="yourName">Your Name:</label>
+                    <input type="text" id="yourName" name="yourName" value="{{ entry[1] }}" required><br><br>
+                    <label for="crushName">Crush Name:</label>
+                    <input type="text" id="crushName" name="crushName" value="{{ entry[2] }}" required><br><br>
+                    <label for="score">Score:</label>
+                    <input type="text" id="score" name="score" value="{{ entry[3] }}" required><br><br>
+                    <button type="submit" class="submit-btn">Update</button>
+                </form>
+
+                <div class="form-actions">
+                    <button onclick="window.location.href='/dashboard'" class="submit-btn">Back to dashboard</button>
+                </div>
+            </article>
+        </main>
+    </div>
+</body>
+</html>

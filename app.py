@@ -92,6 +92,38 @@ def dashboard():
     conn.close()
     
     return render_template('dashboard.html', entries=entries)
+@app.route('/dashboard/edit', methods=['GET', 'POST'])
+def edit_entry():
+    if not session.get('admin'):
+        return redirect(url_for('admin'))
+
+    conn = sqlite3.connect('compatibility.db')
+    c = conn.cursor()
+
+    if request.method == 'POST':
+        entry_id = request.form['id']
+        your_name = request.form['yourName'].strip()
+        crush_name = request.form['crushName'].strip()
+        score = request.form['score'].strip()
+
+        # Update entry in the database
+        c.execute("UPDATE entries SET your_name = ?, crush_name = ?, score = ? WHERE id = ?", 
+                  (your_name, crush_name, score, entry_id))
+        conn.commit()
+        conn.close()
+        
+        return redirect(url_for('dashboard'))
+
+    # Fetch the specific entry to edit
+    entry_id = request.args.get('id')
+    c.execute("SELECT * FROM entries WHERE id = ?", (entry_id,))
+    entry = c.fetchone()
+    conn.close()
+    
+    if entry:
+        return render_template('edit.html', entry=entry)
+    else:
+        return "Entry not found", 404
 
 @app.route('/logout')
 def logout():

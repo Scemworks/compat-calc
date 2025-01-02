@@ -84,7 +84,7 @@ form {
     color: #fff; /* Ensure text is readable on gradient background */
     font-size: clamp(0.9rem, 1.5vw, 1rem);
     transform-origin: left;
-    transition: transform var(--transition);
+    transition: transform var (--transition);
 }
 
 input,
@@ -149,6 +149,22 @@ footer a:hover {
     transform: scale(1.05);
 }
 
+.edit-btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color var(--transition), transform var(--transition);
+    margin: 0.5rem 0;
+}
+
+.edit-btn:hover {
+    background-color: var(--primary-dark);
+    transform: scale(1.05);
+}
+
 .result-content {
     margin-block: 2rem;
 }
@@ -185,6 +201,11 @@ th, td {
 th {
     background-color: var(--primary-color);
     color: #fff;
+}
+
+
+tr:hover {
+    background-color: #000000;
 }
 
 /* Responsive Design */
