@@ -36,29 +36,27 @@ def calculate():
     if not your_name or not crush_name:
         return "Both names are required!", 400
 
-    # Calculate compatibility score based on name combination
-    combined = f"{your_name.lower()}-{crush_name.lower()}"
-    score = md5(combined.encode()).hexdigest()[:4]
-    compatibility = int(score, 16) % 100
-
-    # Store result in the database
+    # Check if the entry already exists (case-insensitive)
     conn = sqlite3.connect('compatibility.db')
     c = conn.cursor()
-    
-    # Check if the entry already exists (case-insensitive)
-    c.execute("SELECT id FROM entries WHERE LOWER(your_name) = LOWER(?) AND LOWER(crush_name) = LOWER(?)", 
+    c.execute("SELECT score FROM entries WHERE LOWER(your_name) = LOWER(?) AND LOWER(crush_name) = LOWER(?)", 
               (your_name, crush_name))
     result = c.fetchone()
 
     if result:
-        # If entry exists, update the compatibility score
-        c.execute("UPDATE entries SET score = ? WHERE id = ?", (str(compatibility), result[0]))
+        # If entry exists, fetch the compatibility score
+        compatibility = int(result[0])
     else:
-        # If entry doesn't exist, insert the new entry into the database
+        # If entry doesn't exist, calculate compatibility score
+        combined = f"{your_name.lower()}-{crush_name.lower()}"
+        score = md5(combined.encode()).hexdigest()[:4]
+        compatibility = int(score, 16) % 100
+
+        # Insert the new entry into the database
         c.execute("INSERT INTO entries (your_name, crush_name, score) VALUES (?, ?, ?)",
                   (your_name, crush_name, str(compatibility)))
-    
-    conn.commit()
+        conn.commit()
+
     conn.close()
 
     # Generate a message based on the compatibility score
@@ -66,6 +64,7 @@ def calculate():
 
     # Return the result to the user
     return render_template('result.html', yourName=your_name, crushName=crush_name, compatibility=compatibility, message=message)
+
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
