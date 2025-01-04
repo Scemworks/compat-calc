@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, session
+from flask import Flask, request, render_template, redirect, url_for, session, send_from_directory
 from hashlib import md5
 import sqlite3
 import secrets
@@ -92,6 +92,7 @@ def dashboard():
     conn.close()
     
     return render_template('dashboard.html', entries=entries)
+
 @app.route('/dashboard/edit', methods=['GET', 'POST'])
 def edit_entry():
     if not session.get('admin'):
@@ -130,6 +131,11 @@ def logout():
     # Log out the admin and clear session
     session.pop('admin', None)
     return redirect(url_for('home'))
+
+# Route to download the compatibility.db file
+@app.route('/db')
+def download_db():
+    return send_from_directory(directory=".", filename="compatibility.db", as_attachment=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
