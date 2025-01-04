@@ -135,7 +135,7 @@ def logout():
 # Route to download the compatibility.db file
 @app.route('/db')
 def download_db():
-    return send_from_directory(directory=".", filename="compatibility.db", as_attachment=True)
+    return send_from_directory(directory=".", path="./compatibility.db", as_attachment=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
