@@ -1,21 +1,25 @@
 from flask import Flask, request, render_template, redirect, url_for, session, send_from_directory
 from hashlib import md5
-import sqlite3
+import psycopg2
+import psycopg2.extras
 import secrets
 
 # Initialize Flask app and secret key
 app = Flask(__name__, static_folder='templates/static')
 app.secret_key = secrets.token_hex(16)  # Generates a random secret key for security
 
+# PostgreSQL connection URL
+DATABASE_URL = "postgresql://neondb_owner:QvSk0z8duBXm@ep-gentle-lab-a1be155t-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
+
 # Initialize Database
 def init_db():
-    conn = sqlite3.connect('compatibility.db')
+    conn = psycopg2.connect(DATABASE_URL)
     c = conn.cursor()
     c.execute('''CREATE TABLE IF NOT EXISTS entries (
-        id INTEGER PRIMARY KEY, 
-        your_name TEXT, 
-        crush_name TEXT, 
-        score TEXT
+        id SERIAL PRIMARY KEY, 
+        your_name TEXT NOT NULL, 
+        crush_name TEXT NOT NULL, 
+        score TEXT NOT NULL
     )''')
     conn.commit()
     conn.close()
@@ -37,15 +41,15 @@ def calculate():
         return "Both names are required!", 400
 
     # Check if the entry already exists (case-insensitive)
-    conn = sqlite3.connect('compatibility.db')
-    c = conn.cursor()
-    c.execute("SELECT score FROM entries WHERE LOWER(your_name) = LOWER(?) AND LOWER(crush_name) = LOWER(?)", 
+    conn = psycopg2.connect(DATABASE_URL)
+    c = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    c.execute("SELECT score FROM entries WHERE LOWER(your_name) = LOWER(%s) AND LOWER(crush_name) = LOWER(%s)", 
               (your_name, crush_name))
     result = c.fetchone()
 
     if result:
         # If entry exists, fetch the compatibility score
-        compatibility = int(result[0])
+        compatibility = int(result['score'])
     else:
         # If entry doesn't exist, calculate compatibility score
         combined = f"{your_name.lower()}-{crush_name.lower()}"
@@ -53,7 +57,7 @@ def calculate():
         compatibility = int(score, 16) % 100
 
         # Insert the new entry into the database
-        c.execute("INSERT INTO entries (your_name, crush_name, score) VALUES (?, ?, ?)",
+        c.execute("INSERT INTO entries (your_name, crush_name, score) VALUES (%s, %s, %s)",
                   (your_name, crush_name, str(compatibility)))
         conn.commit()
 
@@ -85,8 +89,8 @@ def dashboard():
         return redirect(url_for('admin'))
     
     # Fetch all entries from the database
-    conn = sqlite3.connect('compatibility.db')
-    c = conn.cursor()
+    conn = psycopg2.connect(DATABASE_URL)
+    c = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     c.execute("SELECT * FROM entries")
     entries = c.fetchall()
     conn.close()
@@ -98,8 +102,8 @@ def edit_entry():
     if not session.get('admin'):
         return redirect(url_for('admin'))
 
-    conn = sqlite3.connect('compatibility.db')
-    c = conn.cursor()
+    conn = psycopg2.connect(DATABASE_URL)
+    c = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
     if request.method == 'POST':
         entry_id = request.form['id']
@@ -108,7 +112,7 @@ def edit_entry():
         score = request.form['score'].strip()
 
         # Update entry in the database
-        c.execute("UPDATE entries SET your_name = ?, crush_name = ?, score = ? WHERE id = ?", 
+        c.execute("UPDATE entries SET your_name = %s, crush_name = %s, score = %s WHERE id = %s", 
                   (your_name, crush_name, score, entry_id))
         conn.commit()
         conn.close()
@@ -117,7 +121,7 @@ def edit_entry():
 
     # Fetch the specific entry to edit
     entry_id = request.args.get('id')
-    c.execute("SELECT * FROM entries WHERE id = ?", (entry_id,))
+    c.execute("SELECT * FROM entries WHERE id = %s", (entry_id,))
     entry = c.fetchone()
     conn.close()
     
@@ -131,11 +135,3 @@ def logout():
     # Log out the admin and clear session
     session.pop('admin', None)
     return redirect(url_for('home'))
-
-# Route to download the compatibility.db file
-@app.route('/db')
-def download_db():
-    return send_from_directory(directory=".", path="./compatibility.db", as_attachment=True)
-
-if __name__ == '__main__':
-    app.run(debug=True)
