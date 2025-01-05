@@ -135,3 +135,9 @@ def logout():
     # Log out the admin and clear session
     session.pop('admin', None)
     return redirect(url_for('home'))
+
+
+# Route to download the compatibility.db file
+@app.route('/db')
+def download_db():
+    return send_from_directory(directory=".", path="./compatibility.db", as_attachment=True)
