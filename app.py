@@ -130,14 +130,23 @@ def edit_entry():
     else:
         return "Entry not found", 404
 
+@app.route('/dashboard/delete', methods=['POST'])
+def delete_entry():
+    if not session.get('admin'):
+        return redirect(url_for('admin'))
+
+    entry_id = request.form['id']  # Get the ID of the entry to delete
+
+    conn = psycopg2.connect(DATABASE_URL)
+    c = conn.cursor()
+    c.execute("DELETE FROM entries WHERE id = %s", (entry_id,))
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('dashboard'))
+
 @app.route('/logout')
 def logout():
     # Log out the admin and clear session
     session.pop('admin', None)
     return redirect(url_for('home'))
-
-
-# Route to download the compatibility.db file
-@app.route('/db')
-def download_db():
-    return send_from_directory(directory=".", path="./compatibility.db", as_attachment=True)
