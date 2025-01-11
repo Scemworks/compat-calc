@@ -6,7 +6,7 @@ import secrets
 import os
 
 # Initialize Flask app and secret key
-app = Flask(__name__,static_folder="templates/static")
+app = Flask(__name__, static_folder="templates/static")
 app.secret_key = secrets.token_hex(16)  # Generates a random secret key for security
 
 # PostgreSQL connection URL
@@ -77,9 +77,10 @@ def dashboard():
     if not session.get('admin'):
         return redirect(url_for('admin'))
 
+    # Sort entries by 'id' in ascending order
     conn = psycopg2.connect(DATABASE_URL)
     c = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    c.execute("SELECT * FROM entries ORDER BY your_name ASC")
+    c.execute("SELECT * FROM entries ORDER BY id ASC")  # Sorting by 'id' in ascending order
     entries = c.fetchall()
     conn.close()
 
