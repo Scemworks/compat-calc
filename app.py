@@ -82,7 +82,7 @@ def admin():
             return "Invalid credentials", 401
     return render_template('admin.html')
 
-@@app.route('/dashboard')
+@app.route('/dashboard')
 def dashboard():
     # Ensure only admins can access the dashboard
     if not session.get('admin'):
@@ -95,10 +95,8 @@ def dashboard():
     entries = c.fetchall()
     conn.close()
 
-    # Sort entries by the first column (ID) in ascending order
-    sorted_entries = sorted(entries, key=lambda x: x[0])  # Ascending order by ID
-
-    return render_template('dashboard.html', entries=sorted_entries)
+    return render_template('dashboard.html', entries=entries)
+Sort based on entry 0)
 
 @app.route('/dashboard/edit', methods=['GET', 'POST'])
 def edit_entry():
