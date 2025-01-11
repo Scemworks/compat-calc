@@ -9,8 +9,8 @@ import os
 app = Flask(__name__,static_folder="templates/static")
 app.secret_key = secrets.token_hex(16)  # Generates a random secret key for security
 
-# PostgreSQL connection URL from environment variables
-DATABASE_URL = os.environ.get("DATABASE_URL")
+# PostgreSQL connection URL
+DATABASE_URL = "postgresql://neondb_owner:QvSk0z8duBXm@ep-gentle-lab-a1be155t-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
 
 # Initialize Database
 def init_db():
