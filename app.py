@@ -6,7 +6,7 @@ import secrets
 import os
 
 # Initialize Flask app and secret key
-app = Flask(__name__)
+app = Flask(__name__,static_folder="templates/static")
 app.secret_key = secrets.token_hex(16)  # Generates a random secret key for security
 
 # PostgreSQL connection URL from environment variables
