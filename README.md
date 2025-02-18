@@ -45,8 +45,8 @@ To run this project locally using Flask, follow these steps:
 
 Visit the hosted application at [https://crush-compat-calc.vercel.app/](https://crush-compat-calc.vercel.app/) and follow the on-screen instructions to calculate compatibility.
 
-![Compat Calc Screenshot](https://crush-compat-calc.vercel.app/main.png)
-![Compat Calc Result](https://crush-compat-calc.vercel.app/result.png)
+![Compat Calc Screenshot](./main.png)
+![Compat Calc Result](./result.png)
 
 ## Contributing
 
