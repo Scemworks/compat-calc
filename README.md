@@ -37,7 +37,12 @@ To run this project locally using Flask, follow these steps:
     ```powershell
     pip install -r requirements.txt
     ```
-6. Configure your PostgreSQL database and update the database URI in your Flask configuration.
+6. Create a `.env` file in the project root directory and add the following content:
+    ```properties
+    DATABASE_URL = "your postgres url
+    stored_password = 'md5_hash_of_password'  # md5 hash of 'password'
+    ```
+
 7. Start the Flask development server:
     ```powershell
     flask run
@@ -65,7 +70,12 @@ To run this project locally using Flask, follow these steps:
     ```bash
     pip install -r requirements.txt
     ```
-6. Configure your PostgreSQL database and update the database URI in your Flask configuration.
+6. Create a `.env` file in the project root directory and add the following content:
+    ```properties
+    DATABASE_URL = "your postgres url
+    stored_password = 'md5_hash_of_password'  # md5 hash of 'password'
+    ```
+
 7. Start the Flask development server:
     ```bash
     flask run
