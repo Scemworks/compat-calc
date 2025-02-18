@@ -67,7 +67,7 @@ def calculate():
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
     if request.method == 'POST':
-        stored_password = os.getenv('stored_password')  # md5 hash of 'admin@crushcompatcalc'
+        stored_password = os.getenv('stored_password')
         if request.form['username'] == 'admin' and md5(request.form['password'].encode()).hexdigest() == stored_password:
             session['admin'] = True
             return redirect(url_for('dashboard'))

@@ -39,7 +39,7 @@ To run this project locally using Flask, follow these steps:
     ```
 6. Create a `.env` file in the project root directory and add the following content:
     ```properties
-    DATABASE_URL = "your postgres url"
+    DATABASE_URL = "your_postgres_url"
     stored_password = 'md5_hash_of_password'  # md5 hash of 'password' you wish to set.
     ```
 
@@ -72,7 +72,7 @@ To run this project locally using Flask, follow these steps:
     ```
 6. Create a `.env` file in the project root directory and add the following content:
     ```properties
-    DATABASE_URL = "your postgres url"
+    DATABASE_URL = "your_postgres_url"
     stored_password = 'md5_hash_of_password'  # md5 hash of 'password' you wish to set.
     ```
 
