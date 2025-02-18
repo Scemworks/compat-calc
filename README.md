@@ -4,17 +4,46 @@ Welcome to the Compat Calc project! This application is hosted on [Vercel](https
 
 ## Overview
 
-Compat Calc is a compatibility calculator that helps users determine the compatibility between two individuals based on various parameters.
+Compat Calc is a fun compatibility calculator that randomly generates a compatibility percentage between two individuals. The result is stored in a PostgreSQL database, ensuring that if you enter the same names in the same order, the same result will always be displayed.
 
 ## Features
 
 - User-friendly interface
-- Accurate compatibility calculations
-- Supports multiple parameters for compatibility analysis
+- Random compatibility calculation
+- Consistent results via PostgreSQL storage
 
 ## Installation
 
 To run this project locally using Flask, follow these steps:
+### Windows
+
+1. Clone the repository:
+    ```powershell
+    git clone https://github.com/yourusername/compat-calc.git
+    ```
+2. Navigate to the project directory:
+    ```powershell
+    cd compat-calc
+    ```
+3. Create a virtual environment:
+    ```powershell
+    python -m venv venv
+    ```
+4. Activate the virtual environment:
+    ```powershell
+    .\venv\scripts\activate.ps1
+    ```
+5. Install the dependencies:
+    ```powershell
+    pip install -r requirements.txt
+    ```
+6. Configure your PostgreSQL database and update the database URI in your Flask configuration.
+7. Start the Flask development server:
+    ```powershell
+    flask run
+    ```
+
+### macOS and Linux
 
 1. Clone the repository:
     ```bash
@@ -36,14 +65,15 @@ To run this project locally using Flask, follow these steps:
     ```bash
     pip install -r requirements.txt
     ```
-6. Start the Flask development server:
+6. Configure your PostgreSQL database and update the database URI in your Flask configuration.
+7. Start the Flask development server:
     ```bash
     flask run
     ```
 
 ## Usage
 
-Visit the hosted application at [https://crush-compat-calc.vercel.app/](https://crush-compat-calc.vercel.app/) and follow the on-screen instructions to calculate compatibility.
+Visit the hosted application at [https://crush-compat-calc.vercel.app/](https://crush-compat-calc.vercel.app/) and enter the names to calculate compatibility. The compatibility percentage is generated randomly and stored in a PostgreSQL database, ensuring that entering the same names in the same order will always yield the same result.
 
 ![Compat Calc Screenshot](./main.png)
 ![Compat Calc Result](./result.png)
