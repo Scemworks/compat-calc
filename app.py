@@ -4,13 +4,16 @@ import psycopg2
 import psycopg2.extras
 import secrets
 import os
+from dotenv import load_dotenv
 
 # Initialize Flask app and secret key
 app = Flask(__name__, static_folder="templates/static")
 app.secret_key = secrets.token_hex(16)  # Generates a random secret key for security
 
+load_dotenv()
+
 # PostgreSQL connection URL
-DATABASE_URL = "postgresql://neondb_owner:QvSk0z8duBXm@ep-gentle-lab-a1be155t-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
+DATABASE_URL = os.getenv('DATABASE_URL')
 
 # Initialize Database
 def init_db():
@@ -64,7 +67,7 @@ def calculate():
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
     if request.method == 'POST':
-        stored_password = '6d8c60f665759445ea282e026c307c3e'  # md5 hash of 'admin@crushcompatcalc'
+        stored_password = os.getenv('stored_password')  # md5 hash of 'admin@crushcompatcalc'
         if request.form['username'] == 'admin' and md5(request.form['password'].encode()).hexdigest() == stored_password:
             session['admin'] = True
             return redirect(url_for('dashboard'))
